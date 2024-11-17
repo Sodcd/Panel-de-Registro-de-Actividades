@@ -99,7 +99,7 @@
         <div id="formGuia" class="form">
             <div class="form-title">Tabla de Guías</div>
             <label>🪪 Nombre:</label><input type="text" id="nombreGuia">
-            <label>🔰 Rango:</label><input type="text" id="rangoGuia">
+            <label>🪪 Rango:</label><input type="text" id="rangoGuia">
             <label>🕒 Hora de inicio:</label><input type="time" id="inicioGuia">
             <label>🕒 Hora de salida:</label><input type="time" id="salidaGuia">
             <label>👋 Bienvenidas:</label><input type="number" id="bienvenidasGuia">
@@ -110,7 +110,7 @@
         <!-- Formulario para Embajador -->
         <div id="formEmbajador" class="form">
             <div class="form-title">Tabla de Embajadores</div>
-            <label>🪪 Nombre:</label><input type="text" id="nombreEmbajador">
+            <label>🔰 Nombre:</label><input type="text" id="nombreEmbajador">
             <label>🔰 Rango:</label><input type="text" id="rangoEmbajador">
             <label>🕒 Hora de inicio:</label><input type="time" id="inicioEmbajador">
             <label>🕒 Hora de salida:</label><input type="time" id="salidaEmbajador">
@@ -123,8 +123,8 @@
         <!-- Formulario para Moderador -->
         <div id="formModerador" class="form">
             <div class="form-title">Tabla de Moderadores</div>
-            <label>🪪 Nombre:</label><input type="text" id="nombreModerador">
-            <label>🔰 Rango:</label><input type="text" id="rangoModerador">
+            <label>🚔 Nombre:</label><input type="text" id="nombreModerador">
+            <label>🚔 Rango:</label><input type="text" id="rangoModerador">
             <label>🕒 Hora de inicio:</label><input type="time" id="inicioModerador">
             <label>🕒 Hora de salida:</label><input type="time" id="salidaModerador">
             <label>⛔ Baneos:</label><input type="number" id="baneosModerador">
@@ -167,23 +167,30 @@
             let salida = document.getElementById("salida" + tipo).value;
             let horasTrabajadas = calcularHorasTrabajadas(inicio, salida);
             let facturaHTML = `<h2>Factura - ${tipo}</h2>`;
-            facturaHTML += `🪪 Nombre: ${nombre}<br>`;
-            facturaHTML += `🔰 Rango: ${rango}<br>`;
-            facturaHTML += `🕒 Horas trabajadas: ${horasTrabajadas}<br>`;
 
             if (tipo === "Guia") {
+                facturaHTML += `🪪 User: ${nombre}<br>`;
+                facturaHTML += `🪪 Rango: ${rango}<br>`;
+                facturaHTML += `🪪 Horas/min: ${horasTrabajadas}<br>`;
                 let bienvenidas = document.getElementById("bienvenidasGuia").value;
                 let ayudas = document.getElementById("ayudasGuia").value;
-                facturaHTML += `🪪 Bienvenidas: ${bienvenidas}<br>`;
                 facturaHTML += `🪪 Ayudas: ${ayudas}<br>`;
+                facturaHTML += `🪪 Bienvenidas: ${bienvenidas}<br>`;
             } else if (tipo === "Embajador") {
+                facturaHTML += `🔰 User: ${nombre}<br>`;
+                facturaHTML += `🔰 Rango: ${rango}<br>`;
+                facturaHTML += `🔰 Horas/min: ${horasTrabajadas}<br>`;
                 let alertas = document.getElementById("alertasEmbajador").value;
                 let muteos = document.getElementById("muteosEmbajador").value;
                 let ayudas = document.getElementById("ayudasEmbajador").value;
+                facturaHTML += `🔰 Ayudas: ${ayudas}<br>`;
                 facturaHTML += `🔰 Alertas: ${alertas}<br>`;
                 facturaHTML += `🔰 Muteos: ${muteos}<br>`;
-                facturaHTML += `🔰 Ayudas: ${ayudas}<br>`;
+                facturaHTML += `🔰 Bienvenidas: ${bienvenidas}<br>`;
             } else if (tipo === "Moderador") {
+                facturaHTML += `🚔 User: ${nombre}<br>`;
+                facturaHTML += `🚔 Rango: ${rango}<br>`;
+                facturaHTML += `🚔 Horas/min: ${horasTrabajadas}<br>`;
                 let baneos = document.getElementById("baneosModerador").value;
                 let alertas = document.getElementById("alertasModerador").value;
                 let muteos = document.getElementById("muteosModerador").value;
@@ -201,10 +208,11 @@
         function limpiarFactura() {
             document.querySelectorAll(".form input").forEach(input => input.value = "");
             document.getElementById("factura").style.display = "none";
+            document.querySelectorAll(".form").forEach(form => form.style.display = "none");
         }
 
         function redirigirTurno() {
-            window.location.href = " https://sodcd.github.io/Segundo-Panel-de-Trabajo/"; // Reemplaza este enlace con el destino que desees
+            window.location.href = "https://www.example.com/turno-mas";
         }
     </script>
 </body>
