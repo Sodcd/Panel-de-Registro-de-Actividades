@@ -183,10 +183,9 @@
                 let alertas = document.getElementById("alertasEmbajador").value;
                 let muteos = document.getElementById("muteosEmbajador").value;
                 let ayudas = document.getElementById("ayudasEmbajador").value;
-                facturaHTML += `🔰 Ayudas: ${ayudas}<br>`;
                 facturaHTML += `🔰 Alertas: ${alertas}<br>`;
                 facturaHTML += `🔰 Muteos: ${muteos}<br>`;
-                facturaHTML += `🔰 Generar Factura<br>`;
+                facturaHTML += `🔰 Ayudas: ${ayudas}<br>`;
             } else if (tipo === "Moderador") {
                 facturaHTML += `🚔 User: ${nombre}<br>`;
                 facturaHTML += `🚔 Rango: ${rango}<br>`;
@@ -195,10 +194,10 @@
                 let alertas = document.getElementById("alertasModerador").value;
                 let muteos = document.getElementById("muteosModerador").value;
                 let tickets = document.getElementById("ticketsModerador").value;
-                facturaHTML += `🚔 Ayudas: ${ayudasModerador}<br>`;
                 facturaHTML += `🚔 Baneos: ${baneos}<br>`;
+                facturaHTML += `🚔 Alertas: ${alertas}<br>`;
                 facturaHTML += `🚔 Muteos: ${muteos}<br>`;
-                facturaHTML += `🚔 Tickets: ${tickets}<br>`;
+                facturaHTML += `🚔 Tickets atendidos: ${tickets}<br>`;
             }
 
             document.getElementById("factura").innerHTML = facturaHTML;
@@ -206,15 +205,12 @@
         }
 
         function limpiarFactura() {
+            document.querySelectorAll(".form input").forEach(input => input.value = "");
             document.getElementById("factura").style.display = "none";
-            document.querySelectorAll("input").forEach(input => input.value = "");
         }
 
-        // Función para redirigir al turno
-                function redirigirTurno() {
-
-                        window.location.href = " https://sodcd.github.io/Segundo-Panel-de-Trabajo/"; // Reemplaza este enlace con el destino que desees
-
+        function redirigirTurno() {
+            window.location.href = "pagina_de_turnos.html";
         }
     </script>
 </body>
