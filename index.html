@@ -174,24 +174,24 @@
             if (tipo === "Guia") {
                 let bienvenidas = document.getElementById("bienvenidasGuia").value;
                 let ayudas = document.getElementById("ayudasGuia").value;
-                facturaHTML += `👋 Bienvenidas: ${bienvenidas}<br>`;
-                facturaHTML += `📘 Ayudas: ${ayudas}<br>`;
+                facturaHTML += `🪪 Bienvenidas: ${bienvenidas}<br>`;
+                facturaHTML += `🪪 Ayudas: ${ayudas}<br>`;
             } else if (tipo === "Embajador") {
                 let alertas = document.getElementById("alertasEmbajador").value;
                 let muteos = document.getElementById("muteosEmbajador").value;
                 let ayudas = document.getElementById("ayudasEmbajador").value;
-                facturaHTML += `🚨 Alertas: ${alertas}<br>`;
-                facturaHTML += `🔇 Muteos: ${muteos}<br>`;
-                facturaHTML += `📘 Ayudas: ${ayudas}<br>`;
+                facturaHTML += `🔰 Alertas: ${alertas}<br>`;
+                facturaHTML += `🔰 Muteos: ${muteos}<br>`;
+                facturaHTML += `🔰 Ayudas: ${ayudas}<br>`;
             } else if (tipo === "Moderador") {
                 let baneos = document.getElementById("baneosModerador").value;
                 let alertas = document.getElementById("alertasModerador").value;
                 let muteos = document.getElementById("muteosModerador").value;
                 let tickets = document.getElementById("ticketsModerador").value;
-                facturaHTML += `⛔ Baneos: ${baneos}<br>`;
-                facturaHTML += `🚨 Alertas: ${alertas}<br>`;
-                facturaHTML += `🔇 Muteos: ${muteos}<br>`;
-                facturaHTML += `🎫 Tickets atendidos: ${tickets}<br>`;
+                facturaHTML += `🚔 Baneos: ${baneos}<br>`;
+                facturaHTML += `🚔 Alertas: ${alertas}<br>`;
+                facturaHTML += `🚔 Muteos: ${muteos}<br>`;
+                facturaHTML += `🚔 Tickets atendidos: ${tickets}<br>`;
             }
 
             document.getElementById("factura").innerHTML = facturaHTML;
