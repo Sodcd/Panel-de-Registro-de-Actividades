@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Registro de Actividades</title>
+    <style>
+        /* Estilo general */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        #btnGuia { background-color: #3498db; }
+        #btnEmbajador { background-color: #e74c3c; }
+        #btnModerador { background-color: #8e44ad; }
+
+        .btnGenerarFactura { background-color: #2ecc71; margin-top: 15px; }
+
+        .form {
+            display: none;
+            text-align: left;
+            margin-top: 20px;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff4081;
+            margin-bottom: 15px;
+        }
+
+        .form label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .form input {
+            width: 100%;
+            padding: 8px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+
+        #factura {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            color: #fff;
+            text-align: left;
+        }
+
+        /* Estilo del botón Limpiar */
+        .btnLimpiar {
+            background-color: #e74c3c;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="btnGuia" class="btn" onclick="mostrarFormulario('Guia')">Guía</button>
+        <button id="btnEmbajador" class="btn" onclick="mostrarFormulario('Embajador')">Embajador</button>
+        <button id="btnModerador" class="btn" onclick="mostrarFormulario('Moderador')">Moderador</button>
+
+        <!-- Formulario para Guía -->
+        <div id="formGuia" class="form">
+            <div class="form-title">Tabla de Guías</div>
+            <label>🪪 Nombre:</label><input type="text" id="nombreGuia">
+            <label>🔰 Rango:</label><input type="text" id="rangoGuia">
+            <label>🕒 Hora de inicio:</label><input type="time" id="inicioGuia">
+            <label>🕒 Hora de salida:</label><input type="time" id="salidaGuia">
+            <label>👋 Bienvenidas:</label><input type="number" id="bienvenidasGuia">
+            <label>📘 Ayudas:</label><input type="number" id="ayudasGuia">
+            <button class="btn btnGenerarFactura" onclick="generarFactura('Guia')">Generar factura</button>
+        </div>
+
+        <!-- Formulario para Embajador -->
+        <div id="formEmbajador" class="form">
+            <div class="form-title">Tabla de Embajadores</div>
+            <label>🪪 Nombre:</label><input type="text" id="nombreEmbajador">
+            <label>🔰 Rango:</label><input type="text" id="rangoEmbajador">
+            <label>🕒 Hora de inicio:</label><input type="time" id="inicioEmbajador">
+            <label>🕒 Hora de salida:</label><input type="time" id="salidaEmbajador">
+            <label>🚨 Alertas:</label><input type="number" id="alertasEmbajador">
+            <label>🔇 Muteos:</label><input type="number" id="muteosEmbajador">
+            <label>📘 Ayudas:</label><input type="number" id="ayudasEmbajador">
+            <button class="btn btnGenerarFactura" onclick="generarFactura('Embajador')">Generar factura</button>
+        </div>
+
+        <!-- Formulario para Moderador -->
+        <div id="formModerador" class="form">
+            <div class="form-title">Tabla de Moderadores</div>
+            <label>🪪 Nombre:</label><input type="text" id="nombreModerador">
+            <label>🔰 Rango:</label><input type="text" id="rangoModerador">
+            <label>🕒 Hora de inicio:</label><input type="time" id="inicioModerador">
+            <label>🕒 Hora de salida:</label><input type="time" id="salidaModerador">
+            <label>⛔ Baneos:</label><input type="number" id="baneosModerador">
+            <label>🚨 Alertas:</label><input type="number" id="alertasModerador">
+            <label>🔇 Muteos:</label><input type="number" id="muteosModerador">
+            <label>🎫 Tickets atendidos:</label><input type="number" id="ticketsModerador">
+            <button class="btn btnGenerarFactura" onclick="generarFactura('Moderador')">Generar factura</button>
+        </div>
+
+        <!-- Factura generada -->
+        <div id="factura"></div>
+
+        <!-- Botón para limpiar la factura -->
+        <button class="btn btnLimpiar" onclick="limpiarFactura()">Limpiar</button>
+
+        <!-- Botón Turno + agregado con función de redirección -->
+        <button class="btn btnGenerarFactura" id="btnTurnoMas" onclick="redirigirTurno()">Turno +</button>
+    </div>
+
+    <script>
+        function mostrarFormulario(tipo) {
+            document.querySelectorAll(".form").forEach(form => form.style.display = "none");
+            document.getElementById("form" + tipo).style.display = "block";
+            document.getElementById("factura").style.display = "none";
+        }
+
+        function calcularHorasTrabajadas(inicio, salida) {
+            let horaInicio = new Date("1970-01-01T" + inicio + ":00");
+            let horaSalida = new Date("1970-01-01T" + salida + ":00");
+            let diferencia = new Date(horaSalida - horaInicio);
+            let horas = diferencia.getUTCHours();
+            let minutos = diferencia.getUTCMinutes();
+            return `${horas} hrs ${minutos} mins`;
+        }
+
+        function generarFactura(tipo) {
+            let nombre = document.getElementById("nombre" + tipo).value;
+            let rango = document.getElementById("rango" + tipo).value;
+            let inicio = document.getElementById("inicio" + tipo).value;
+            let salida = document.getElementById("salida" + tipo).value;
+            let horasTrabajadas = calcularHorasTrabajadas(inicio, salida);
+            let facturaHTML = `<h2>Factura - ${tipo}</h2>`;
+            facturaHTML += `🪪 Nombre: ${nombre}<br>`;
+            facturaHTML += `🔰 Rango: ${rango}<br>`;
+            facturaHTML += `🕒 Horas trabajadas: ${horasTrabajadas}<br>`;
+
+            if (tipo === "Guia") {
+                let bienvenidas = document.getElementById("bienvenidasGuia").value;
+                let ayudas = document.getElementById("ayudasGuia").value;
+                facturaHTML += `👋 Bienvenidas: ${bienvenidas}<br>`;
+                facturaHTML += `📘 Ayudas: ${ayudas}<br>`;
+            } else if (tipo === "Embajador") {
+                let alertas = document.getElementById("alertasEmbajador").value;
+                let muteos = document.getElementById("muteosEmbajador").value;
+                let ayudas = document.getElementById("ayudasEmbajador").value;
+                facturaHTML += `🚨 Alertas: ${alertas}<br>`;
+                facturaHTML += `🔇 Muteos: ${muteos}<br>`;
+                facturaHTML += `📘 Ayudas: ${ayudas}<br>`;
+            } else if (tipo === "Moderador") {
+                let baneos = document.getElementById("baneosModerador").value;
+                let alertas = document.getElementById("alertasModerador").value;
+                let muteos = document.getElementById("muteosModerador").value;
+                let tickets = document.getElementById("ticketsModerador").value;
+                facturaHTML += `⛔ Baneos: ${baneos}<br>`;
+                facturaHTML += `🚨 Alertas: ${alertas}<br>`;
+                facturaHTML += `🔇 Muteos: ${muteos}<br>`;
+                facturaHTML += `🎫 Tickets atendidos: ${tickets}<br>`;
+            }
+
+            document.getElementById("factura").innerHTML = facturaHTML;
+            document.getElementById("factura").style.display = "block";
+        }
+
+        function limpiarFactura() {
+            document.querySelectorAll(".form input").forEach(input => input.value = "");
+            document.getElementById("factura").style.display = "none";
+        }
+
+        function redirigirTurno() {
+            window.location.href = " https://sodcd.github.io/Segundo-Panel-de-Trabajo/"; // Reemplaza este enlace con el destino que desees
+        }
+    </script>
+</body>
+</html>
