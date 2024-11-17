@@ -186,7 +186,7 @@
                 facturaHTML += `🔰 Ayudas: ${ayudas}<br>`;
                 facturaHTML += `🔰 Alertas: ${alertas}<br>`;
                 facturaHTML += `🔰 Muteos: ${muteos}<br>`;
-                facturaHTML += `🔰 Bienvenidas: ${bienvenidas}<br>`;
+                facturaHTML += `🔰 Total: ${alertas * 5 + muteos * 3 + ayudas * 1}<br>`;
             } else if (tipo === "Moderador") {
                 facturaHTML += `🚔 User: ${nombre}<br>`;
                 facturaHTML += `🚔 Rango: ${rango}<br>`;
@@ -199,6 +199,7 @@
                 facturaHTML += `🚔 Alertas: ${alertas}<br>`;
                 facturaHTML += `🚔 Muteos: ${muteos}<br>`;
                 facturaHTML += `🚔 Tickets atendidos: ${tickets}<br>`;
+                facturaHTML += `🚔 Total: ${baneos * 10 + alertas * 5 + muteos * 3 + tickets * 2}<br>`;
             }
 
             document.getElementById("factura").innerHTML = facturaHTML;
@@ -208,11 +209,10 @@
         function limpiarFactura() {
             document.querySelectorAll(".form input").forEach(input => input.value = "");
             document.getElementById("factura").style.display = "none";
-            document.querySelectorAll(".form").forEach(form => form.style.display = "none");
         }
 
         function redirigirTurno() {
-            window.location.href = "https://www.example.com/turno-mas";
+            window.location.href = "https://www.yourturnopage.com";
         }
     </script>
 </body>
